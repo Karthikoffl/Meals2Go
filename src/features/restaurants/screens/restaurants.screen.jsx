@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { MD2Colors } from 'react-native-paper';
 import { LoadingContainer, Loading } from './restaurants.screen.styles';
-import { FlatList } from 'react-native';
+import { FlatList, Pressable } from 'react-native';
 import { RestaurantsContext } from '../../../services/restaurants/restaurants.context';
 
 import { RestaurantInfoCard } from '../components/restaurant-info-card.component';
@@ -10,7 +10,7 @@ import { Spacer } from '../../../components/spacer/spacer.component';
 import { Search } from '../components/search.component';
 
 
-export const RestaurantsScreen = () => {
+export const RestaurantsScreen = ({ navigation }) => {
   const { isLoading, error, restaurants } = useContext(RestaurantsContext);
   return (
     <SafeArea>
@@ -24,9 +24,11 @@ export const RestaurantsScreen = () => {
         data={restaurants}
         renderItem={({ item }) => {
           return (
-            <Spacer key={item.name} position='bottom' size='large'>
-              <RestaurantInfoCard restaurant={item}/>
-            </Spacer>
+            <Pressable onPress={() => navigation.navigate('RestaurantDetail')}>
+              <Spacer key={item.name} position='bottom' size='large'>
+                <RestaurantInfoCard restaurant={item}/>
+              </Spacer>
+            </Pressable>
         );
       }}
         keyExtractor={(item) => item.name}
